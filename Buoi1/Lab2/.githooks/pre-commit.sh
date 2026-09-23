@@ -1,0 +1,2 @@
+#!/bin/sh
+python Buoi1/Lab2/.githooks/pre-commit
