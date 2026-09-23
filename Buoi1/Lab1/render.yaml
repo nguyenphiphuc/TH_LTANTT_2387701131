@@ -1,7 +1,7 @@
 services:
   - type: web
     name: securevalidator-auto
-    rootDir: secure-validator-lab
+    rootDir: Buoi1/Lab1  # Sửa dòng này thành Buoi1/Lab1
     runtime: python
     buildCommand: "pip install -r requirements.txt"
     startCommand: "gunicorn app:app"
