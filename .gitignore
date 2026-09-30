@@ -1,0 +1,5 @@
+.venv/
+certs/
+*.pem
+__pycache__/
+*.egg-info/
