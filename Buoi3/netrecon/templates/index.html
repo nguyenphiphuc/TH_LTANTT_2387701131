@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>NetRecon - Network Reconnaissance Toolkit</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>NetRecon - Network Reconnaissance Toolkit</h1>
+    <form action="/scan" method="post">
+        <label>Target IP:</label>
+        <input type="text" name="target" required><br>
+        <label>Ports (comma-separated):</label>
+        <input type="text" name="ports" value="22,80,443" required><br>
+        <label>Mode:</label>
+        <select name="mode">
+            <option value="all">All</option>
+            <option value="scan">Scan</option>
+            <option value="service">Service</option>
+            <option value="banner">Banner</option>
+            <option value="map">Map</option>
+            <option value="vuln">Vuln</option>
+        </select><br>
+        <label>Email nhận kết quả:</label>
+        <input type="email" name="email" required><br>
+        <button type="submit">Scan</button>
+    </form>
+</body>
+</html>

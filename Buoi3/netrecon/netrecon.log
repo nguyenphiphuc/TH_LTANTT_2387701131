@@ -1,0 +1,257 @@
+INFO:root:[2026-10-07 14:26:22] Running service detection on scanme.nmap.org:22, 80, 443
+INFO:root:[2026-10-07 14:42:18] Running service detection on scanme.nmap.org:22, 80, 443
+INFO:root:[2026-10-07 14:42:30] Starting Nmap 7.991 ( https://nmap.org ) at 2026-10-07 14:42 +0700
+Nmap scan report for scanme.nmap.org (45.33.32.156)
+Host is up (0.24s latency).
+Other addresses for scanme.nmap.org (not scanned): 2600:3c01::f03c:91ff:fe18:bb2f
+
+PORT    STATE  SERVICE VERSION
+22/tcp  open   ssh     OpenSSH 6.6.1p1 Ubuntu 2ubuntu2.13 (Ubuntu Linux; protocol 2.0)
+80/tcp  open   http    Apache httpd 2.4.7 ((Ubuntu))
+443/tcp closed https
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 12.24 seconds
+
+INFO:root:[2026-10-07 14:42:31] [scanme.nmap.org:22] Banner: SSH-2.0-OpenSSH_6.6.1p1 Ubuntu-2ubuntu2.13
+INFO:root:[2026-10-07 14:42:35] Mapping network...
+INFO:root:[2026-10-07 14:42:35] 
+Interface: 192.168.137.1 --- 0x4
+  Internet Address      Physical Address      Type
+  192.168.137.255       ff-ff-ff-ff-ff-ff     static    
+  224.0.0.2             01-00-5e-00-00-02     static    
+  224.0.0.22            01-00-5e-00-00-16     static    
+  224.0.0.251           01-00-5e-00-00-fb     static    
+  224.0.0.252           01-00-5e-00-00-fc     static    
+  224.0.0.253           01-00-5e-00-00-fd     static    
+  224.77.77.77          01-00-5e-4d-4d-4d     static    
+  239.255.255.250       01-00-5e-7f-ff-fa     static    
+  255.255.255.255       ff-ff-ff-ff-ff-ff     static    
+
+Interface: 169.254.83.107 --- 0x7
+  Internet Address      Physical Address      Type
+  169.254.255.255                             static    
+  224.0.0.22                                  static    
+  224.0.0.251                                 static    
+  239.255.255.250                             static    
+
+Interface: 169.254.72.118 --- 0xa
+  Internet Address      Physical Address      Type
+  224.0.0.2             01-00-5e-00-00-02     static    
+  224.0.0.22            01-00-5e-00-00-16     static    
+  224.0.0.251           01-00-5e-00-00-fb     static    
+  224.0.0.252           01-00-5e-00-00-fc     static    
+  224.0.0.253           01-00-5e-00-00-fd     static    
+  224.77.77.77          01-00-5e-4d-4d-4d     static    
+  239.255.255.250       01-00-5e-7f-ff-fa     static    
+  255.255.255.255       ff-ff-ff-ff-ff-ff     static    
+
+Interface: 192.168.59.1 --- 0xb
+  Internet Address      Physical Address      Type
+  192.168.59.255        ff-ff-ff-ff-ff-ff     static    
+  224.0.0.2             01-00-5e-00-00-02     static    
+  224.0.0.22            01-00-5e-00-00-16     static    
+  224.0.0.251           01-00-5e-00-00-fb     static    
+  224.0.0.252           01-00-5e-00-00-fc     static    
+  224.0.0.253           01-00-5e-00-00-fd     static    
+  224.77.77.77          01-00-5e-4d-4d-4d     static    
+  239.255.255.250       01-00-5e-7f-ff-fa     static    
+
+Interface: 192.168.2.1 --- 0xd
+  Internet Address      Physical Address      Type
+  192.168.2.255         ff-ff-ff-ff-ff-ff     static    
+  224.0.0.2             01-00-5e-00-00-02     static    
+  224.0.0.22            01-00-5e-00-00-16     static    
+  224.0.0.251           01-00-5e-00-00-fb     static    
+  224.0.0.252           01-00-5e-00-00-fc     static    
+  224.0.0.253           01-00-5e-00-00-fd     static    
+  224.77.77.77          01-00-5e-4d-4d-4d     static    
+  239.255.255.250       01-00-5e-7f-ff-fa     static    
+
+Interface: 192.168.3.1 --- 0xe
+  Internet Address      Physical Address      Type
+  192.168.3.255         ff-ff-ff-ff-ff-ff     static    
+  224.0.0.2             01-00-5e-00-00-02     static    
+  224.0.0.22            01-00-5e-00-00-16     static    
+  224.0.0.251           01-00-5e-00-00-fb     static    
+  224.0.0.252           01-00-5e-00-00-fc     static    
+  224.0.0.253           01-00-5e-00-00-fd     static    
+  224.77.77.77          01-00-5e-4d-4d-4d     static    
+  239.255.255.250       01-00-5e-7f-ff-fa     static    
+
+Interface: 10.12.24.225 --- 0x12
+  Internet Address      Physical Address      Type
+  10.12.0.254           00-aa-6e-37-de-67     dynamic   
+  10.12.7.126           d0-57-7e-09-8c-42     dynamic   
+  10.12.7.213           50-5a-65-ca-2b-a3     dynamic   
+  10.12.8.27            70-08-94-3e-2a-cf     dynamic   
+  10.12.8.160           f4-ce-23-da-66-be     dynamic   
+  10.12.8.189           74-4c-a1-78-94-15     dynamic   
+  10.12.8.195           bc-09-1b-22-77-7f     dynamic   
+  10.12.9.154           f4-c8-8a-7f-ed-06     dynamic   
+  10.12.10.117          70-08-94-3f-7d-fd     dynamic   
+  10.12.11.83           38-8d-3d-bf-64-f0     dynamic   
+  10.12.11.213          06-35-b4-f3-af-a8     dynamic   
+  10.12.12.10           50-bb-b5-26-89-15     dynamic   
+  10.12.12.27           b0-dc-ef-d9-40-1d     dynamic   
+  10.12.12.107          08-6a-c5-62-f6-4c     dynamic   
+  10.12.15.55           14-85-7f-bf-4b-cc     dynamic   
+  10.12.21.70           70-cf-49-3f-95-17     dynamic   
+  10.12.21.116          00-41-0e-3e-8f-17     dynamic   
+  10.12.22.44           04-56-e5-eb-ba-d6     dynamic   
+  10.12.22.64           7c-fa-80-27-8d-b0     dynamic   
+  10.12.22.104          94-bb-43-ee-22-0b     dynamic   
+  10.12.22.184          f0-68-e3-cd-ec-35     dynamic   
+  10.12.23.97           1c-70-c9-d6-13-54     dynamic   
+  10.12.24.120          e8-b0-c5-90-5f-7e     dynamic   
+  10.12.24.246          bc-03-58-11-9b-f3     dynamic   
+  10.12.25.149          dc-46-28-25-80-00     dynamic   
+  10.12.26.33           a4-42-3b-66-b5-a2     dynamic   
+  10.12.26.76           b0-3c-dc-e7-86-af     dynamic   
+  10.12.26.167          f4-7b-09-89-e3-d8     dynamic   
+  10.12.27.159          e8-f4-08-6d-2c-cf     dynamic   
+  10.12.28.43           78-af-08-e2-4c-99     dynamic   
+  10.12.30.104          14-13-33-39-fd-3f     dynamic   
+  10.12.35.175          50-bb-b5-f1-fa-ae     dynamic   
+  10.12.36.14           e4-0d-36-84-dc-99     dynamic   
+  10.12.36.242          4c-a9-54-2b-7a-ff     dynamic   
+  10.12.37.145          a4-f9-33-05-68-38     dynamic   
+  10.12.37.190          f4-ac-bc-ad-0b-5f     dynamic   
+  10.12.38.56           f4-7b-09-21-8c-bb     dynamic   
+  10.12.38.82           c0-a8-10-58-03-22     dynamic   
+  10.12.38.173          42-d8-c7-68-2c-66     dynamic   
+  10.12.38.181          e6-7c-72-17-e5-50     dynamic   
+  10.12.38.197          9c-30-5b-3c-e0-63     dynamic   
+  10.12.38.247          f8-54-f6-1b-15-33     dynamic   
+  10.12.39.6            d0-39-57-e4-c3-17     dynamic   
+  10.12.39.70           7c-70-db-f7-8f-8c     dynamic   
+  10.12.39.107          d8-80-83-d0-2d-c9     dynamic   
+  10.12.39.195          38-d5-7a-20-b5-1d     dynamic   
+  10.12.41.151          dc-97-ba-b2-a6-47     dynamic   
+  10.12.44.47           38-00-25-f9-94-9e     dynamic   
+  10.12.51.110          44-fa-66-f2-3f-cf     dynamic   
+  10.12.51.126          14-13-33-60-17-4f     dynamic   
+  10.12.51.139          84-7b-57-26-59-49     dynamic   
+  10.12.51.168          58-cd-c9-0b-36-05     dynamic   
+  10.12.51.186          70-1a-b8-17-f0-cf     dynamic   
+  10.12.51.212          e0-0a-f6-80-d7-f3     dynamic   
+  10.12.51.234          e4-60-17-f2-17-f5     dynamic   
+  10.12.52.12           f8-54-f6-1a-ff-43     dynamic   
+  10.12.52.81           54-14-f3-b6-8c-30     dynamic   
+  10.12.52.133          44-f7-9f-f6-8a-61     dynamic   
+  10.12.52.239          7c-b5-66-b2-7e-79     dynamic   
+  10.12.53.5            cc-47-40-cb-c8-32     dynamic   
+  10.12.53.30           8c-17-59-5a-c8-c3     dynamic   
+  10.12.55.21           00-91-9e-4a-12-58     dynamic   
+  10.12.55.48           f8-3d-c6-87-3a-78     dynamic   
+  10.12.55.76           14-85-7f-f6-0c-0c     dynamic   
+  10.12.55.175          68-54-5a-8f-14-8e     dynamic   
+  10.12.55.176          90-cc-df-4a-c4-5f     dynamic   
+  10.12.55.214          bc-09-b9-74-06-0f     dynamic   
+  10.12.55.248          2c-3b-70-dc-b0-ab     dynamic   
+  10.12.56.6            2c-3b-70-95-57-5f     dynamic   
+  10.12.56.28           80-45-dd-9a-ff-56     dynamic   
+  10.12.56.57           20-0b-74-60-59-7a     dynamic   
+  10.12.56.99           0c-79-55-f1-e6-d2     dynamic   
+  10.12.56.133          f4-c8-8a-54-cf-63     dynamic   
+  10.12.56.145          e4-60-17-ea-c4-d7     dynamic   
+  10.12.56.164          14-75-5b-4b-50-e6     dynamic   
+  10.12.56.213          2c-9c-58-88-76-09     dynamic   
+  10.12.57.61           b8-f7-75-0e-94-21     dynamic   
+  10.12.57.73           10-68-38-16-f8-fb     dynamic   
+  10.12.57.121          4c-77-cb-71-b0-d3     dynamic   
+  10.12.57.135          f4-4e-b4-39-4a-a1     dynamic   
+  10.12.57.151          72-c9-12-ed-15-76     dynamic   
+  10.12.57.161          cc-5e-f8-1d-eb-19     dynamic   
+  10.12.57.168          48-45-e6-6b-97-31     dynamic   
+  10.12.57.171          28-d0-43-78-d4-9e     dynamic   
+  10.12.57.179          f8-54-f6-1b-9c-2b     dynamic   
+  10.12.57.205          2c-3b-70-93-63-59     dynamic   
+  10.12.57.207          28-6b-35-71-1f-e2     dynamic   
+  10.12.57.242          ac-f2-3c-89-dd-47     dynamic   
+  10.12.57.246          98-43-fa-0e-20-6d     dynamic   
+  10.12.57.251          38-68-93-90-2a-68     dynamic   
+  10.12.58.5            48-45-e6-f8-0c-19     dynamic   
+  10.12.58.18           34-2e-b7-d5-51-83     dynamic   
+  10.12.58.21           82-4f-1d-58-29-53     dynamic   
+  10.12.58.22           78-be-81-13-d0-2c     dynamic   
+  10.12.58.41           14-b5-cd-45-28-21     dynamic   
+  10.12.58.42           e8-bf-b8-66-23-58     dynamic   
+  10.12.58.51           98-5f-41-45-28-9c     dynamic   
+  10.12.58.84           9c-67-d6-f1-db-5f     dynamic   
+  10.12.58.91           70-08-94-d5-a5-8f     dynamic   
+  10.12.58.106          3c-55-76-93-bf-55     dynamic   
+  10.12.58.110          50-bb-b5-ea-83-06     dynamic   
+  10.12.58.114          f0-68-e3-83-7c-61     dynamic   
+  10.12.58.127          24-b2-b9-bd-e2-9f     dynamic   
+  10.12.58.139          30-f6-ef-ef-0e-84     dynamic   
+  10.12.58.162          f4-6a-dd-f5-10-83     dynamic   
+  10.12.58.186          94-bb-43-e9-fa-7a     dynamic   
+  10.12.58.191          2c-3b-70-9a-f2-23     dynamic   
+  10.12.59.60           a8-93-4a-5f-63-c7     dynamic   
+  10.12.59.85           50-bb-b5-c0-43-1c     dynamic   
+  10.12.59.223          f4-c8-8a-2b-07-c3     dynamic   
+  10.12.62.154          a4-42-3b-74-0b-21     dynamic   
+  10.12.62.219          ce-b7-38-e6-88-08     dynamic   
+  10.12.63.135          44-38-e8-78-3d-cc     dynamic   
+  10.12.63.191          a0-59-50-ea-0a-b0     dynamic   
+  10.12.63.217          84-9e-56-bb-45-2f     dynamic   
+  10.12.64.37           3c-58-c2-bf-59-a0     dynamic   
+  10.12.64.94           58-96-1d-75-d7-d5     dynamic   
+  10.12.64.125          4c-03-4f-dc-98-58     dynamic   
+  10.12.64.184          bc-f4-d4-81-0d-8d     dynamic   
+  10.12.64.190          4c-03-4f-e8-3f-a5     dynamic   
+  10.12.64.247          70-1a-b8-e3-09-e0     dynamic   
+  10.12.65.97           50-28-4a-b7-78-48     dynamic   
+  10.12.69.90           dc-41-a9-4e-52-af     dynamic   
+  10.12.70.100          f0-77-c3-02-1b-06     dynamic   
+  10.12.70.252          44-38-e8-78-ce-3b     dynamic   
+  10.12.73.220          78-46-5c-42-78-6d     dynamic   
+  10.12.74.28           34-6f-24-a3-23-ff     dynamic   
+  10.12.75.111          14-ac-60-6e-a4-83     dynamic   
+  10.12.75.139          f0-57-a6-f6-f3-06     dynamic   
+  10.12.83.142          bc-d2-2c-83-5e-fa     dynamic   
+  10.12.83.144          cc-47-40-ec-9f-39     dynamic   
+  10.12.83.220          f0-a6-54-26-4f-57     dynamic   
+  10.12.83.246          14-13-33-d7-d2-5d     dynamic   
+  10.12.84.130          f4-7b-09-6c-41-84     dynamic   
+  10.12.84.183          24-b2-b9-b3-6c-f1     dynamic   
+  10.12.85.95           30-03-c8-45-f0-e5     dynamic   
+  10.12.100.145         dc-f5-05-f6-64-c7     dynamic   
+  10.12.100.210         98-59-7a-b9-0a-e1     dynamic   
+  10.12.102.158         70-08-94-66-15-db     dynamic   
+  10.12.105.27          86-dd-f2-0e-0f-e2     dynamic   
+  10.12.105.78          b0-7d-64-9e-38-42     dynamic   
+  10.12.109.222         d8-80-83-cc-5d-d1     dynamic   
+  10.12.112.76          e4-c7-67-64-76-f7     dynamic   
+  10.12.114.104         5c-67-83-ed-9f-9a     dynamic   
+  10.12.114.162         80-30-49-cb-39-23     dynamic   
+  10.12.115.241         4c-23-38-bf-d8-0f     dynamic   
+  10.12.115.246         50-bb-b5-f1-57-2c     dynamic   
+  10.12.115.255         f0-68-e3-4a-62-5e     dynamic   
+  10.12.116.16          e0-0a-f6-b6-62-31     dynamic   
+  10.12.116.46          c0-35-32-ee-aa-61     dynamic   
+  10.12.116.68          04-e8-b9-66-97-e3     dynamic   
+  10.12.116.81          4c-79-6e-cf-54-f4     dynamic   
+  10.12.116.89          2c-3b-70-5e-04-c9     dynamic   
+  10.12.116.111         2c-98-11-01-ab-33     dynamic   
+  10.12.116.134         dc-21-48-7f-10-b6     dynamic   
+  10.12.116.160         70-1c-e7-f4-28-79     dynamic   
+  10.12.116.165         f8-54-f6-92-71-e3     dynamic   
+  10.12.116.241         68-54-5a-4e-25-b9     dynamic   
+  10.12.255.255         ff-ff-ff-ff-ff-ff     static    
+  224.0.0.2             01-00-5e-00-00-02     static    
+  224.0.0.22            01-00-5e-00-00-16     static    
+  224.0.0.250           01-00-5e-00-00-fa     static    
+  224.0.0.251           01-00-5e-00-00-fb     static    
+  224.0.0.252           01-00-5e-00-00-fc     static    
+  224.0.0.253           01-00-5e-00-00-fd     static    
+  224.0.1.60            01-00-5e-00-01-3c     static    
+  224.77.77.77          01-00-5e-4d-4d-4d     static    
+  239.192.0.0           01-00-5e-40-00-00     static    
+  239.255.102.18        01-00-5e-7f-66-12     static    
+  239.255.255.250       01-00-5e-7f-ff-fa     static    
+  239.255.255.251       01-00-5e-7f-ff-fb     static    
+  255.255.255.255       ff-ff-ff-ff-ff-ff     static    
+
