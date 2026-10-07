@@ -54,11 +54,18 @@ secure-chat/
    *(Mở nhiều terminal để giả lập nhiều người dùng khác nhau tham gia phòng trò chuyện).*
 
 ## 6. Kết quả thực nghiệm và Kiểm thử
-Dưới đây là hình ảnh và log kiểm thử thực tế ứng dụng trò chuyện mã hóa **SecureChat**:
+Dưới đây là hình ảnh kiểm thử thực tế ứng dụng trò chuyện mã hóa **SecureChat**:
 
-### Hình ảnh kiểm thử thực tế:
+### 1. Khởi tạo chứng chỉ số thành công (make-certs.bat):
+![Khởi tạo chứng chỉ](images/make_certs.png)
+
+### 2. Máy chủ Server bắt đầu lắng nghe (server.py):
 ![Server Listening](images/server.png)
+
+### 3. Máy khách Client Alice gửi tin nhắn (client.py):
 ![Client Alice](images/client_alice.png)
+
+### 4. Máy khách Client Bob nhận tin nhắn mã hóa E2E theo thời gian thực (client.py):
 ![Client Bob](images/client_bob.png)
 
 ### Chi tiết nhật ký hoạt động (Logs):
