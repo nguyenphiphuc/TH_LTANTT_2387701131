@@ -53,10 +53,34 @@ secure-chat/
    ```
    *(Mở nhiều terminal để giả lập nhiều người dùng khác nhau tham gia phòng trò chuyện).*
 
-## 6. Kết quả thực nghiệm
-*(Phần này trình bày hình ảnh các terminal đang hoạt động, chứng minh tính năng mã hóa E2E, khả năng trao đổi thông báo theo thời gian thực và quản lý phòng thành công).*
+## 6. Kết quả thực nghiệm và Kiểm thử
+Dưới đây là kết quả kiểm thử thực tế ứng dụng trò chuyện mã hóa **SecureChat**:
 
-**[TBD: Chèn hình ảnh tại đây]**
+1. **Khởi chạy Máy chủ (Server):**
+   - Server kích hoạt lắng nghe tại địa chỉ `127.0.0.1:8443` với chứng chỉ số SSL/TLS hợp lệ.
+   ```text
+   Server listening on 127.0.0.1:8443
+   ```
+
+2. **Khởi chạy Máy khách 1 (Alice):**
+   - Alice kết nối tới Server thông qua kênh mã hóa TLS, truyền khóa đối xứng AES-256 ngẫu nhiên và bắt đầu gửi tin nhắn.
+   ```text
+   Username: Alice
+   Type messages (type 'exit' to quit):
+   dsada
+   ádas
+   ```
+
+3. **Khởi chạy Máy khách 2 (Bob):**
+   - Bob kết nối vào cùng phòng `general`. Server nhận tin nhắn mã hóa AES từ Alice, giải mã và mã hóa lại bằng khóa AES riêng của Bob để truyền đến Bob theo thời gian thực:
+   ```text
+   Username: Bob
+   Type messages (type 'exit' to quit):
+   [Alice]: dsada
+   [Alice]: ádas
+   ```
+
+=> **Kết luận:** Ứng dụng đã hoàn thành đầy đủ các yêu cầu về mã hóa kênh truyền (TLS), xác thực chứng chỉ số (Mutual Auth) và mã hóa nội dung tin nhắn đầu cuối (E2EE AES-256).
 
 ---
 *Báo cáo bài tập môn Lập trình An toàn Mạng.*

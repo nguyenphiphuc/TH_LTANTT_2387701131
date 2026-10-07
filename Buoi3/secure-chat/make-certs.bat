@@ -1,5 +1,6 @@
 @echo off
 setlocal enabledelayedexpansion
+set "PATH=%PATH%;C:\Program Files\OpenSSL-Win64\bin;C:\Program Files\Git\usr\bin"
 :: Di chuyển vào thư mục hiện tại
 cd /d %~dp0
 :: Tạo các thư mục con trong certs/
