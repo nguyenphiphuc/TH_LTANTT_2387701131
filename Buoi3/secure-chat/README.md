@@ -54,8 +54,14 @@ secure-chat/
    *(Mở nhiều terminal để giả lập nhiều người dùng khác nhau tham gia phòng trò chuyện).*
 
 ## 6. Kết quả thực nghiệm và Kiểm thử
-Dưới đây là kết quả kiểm thử thực tế ứng dụng trò chuyện mã hóa **SecureChat**:
+Dưới đây là hình ảnh và log kiểm thử thực tế ứng dụng trò chuyện mã hóa **SecureChat**:
 
+### Hình ảnh kiểm thử thực tế:
+![Server Listening](images/server.png)
+![Client Alice](images/client_alice.png)
+![Client Bob](images/client_bob.png)
+
+### Chi tiết nhật ký hoạt động (Logs):
 1. **Khởi chạy Máy chủ (Server):**
    - Server kích hoạt lắng nghe tại địa chỉ `127.0.0.1:8443` với chứng chỉ số SSL/TLS hợp lệ.
    ```text
