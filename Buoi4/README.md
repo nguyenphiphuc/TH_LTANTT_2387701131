@@ -134,23 +134,55 @@ Dự án [jwt-security-tools](file:///d:/LAB_04_LTANTT/Buoi4/jwt-security-tools)
 
 ---
 
-### 3.2. Kiểm thử và xác thực API
+### 3.2. Minh chứng thực nghiệm 4: Khởi chạy API Gateway và Phát hành Token (`main.py`)
 
-- **Chạy kiểm thử Pytest:**
-  ```powershell
-  cd Buoi4/jwt-security-tools
-  $env:PYTEST_DISABLE_PLUGIN_AUTOLOAD = "1"; pytest tests/
-  ```
-  *Kết quả:* Thông qua toàn bộ **7/7 test cases** (`7 passed`).
-- **Thực thi phát hành Token và gọi API với `curl`:**
-  ```powershell
-  # Terminal 1: Chạy main.py
-  python .\main.py
-  
-  # Terminal 2: Gửi request xác thực
-  curl -H "Authorization: Bearer <access_token>" http://127.0.0.1:5000/protected
-  ```
-  *Kết quả phản hồi:* `{"message": "Access granted", "user": "phuoc"}`.
+Hình ảnh dưới đây ghi lại quá trình khởi chạy chương trình chính `main.py`, hệ thống tự động phát hành cặp khóa Access/Refresh Token cho sinh viên **Phuc** và kích hoạt máy chủ API Gateway:
+
+![Minh chứng thực nghiệm 4: Khởi chạy API Gateway và Phát hành Token](images/4_jwt_server_main.png)
+
+#### 📝 Phân tích chi tiết quy trình phát hành và vận hành Gateway:
+1. **Quản trị vòng đời Token (`TokenManager`):**
+   - Lớp `TokenManager` sử dụng khóa bí mật đối xứng `secret` và thuật toán `HS256` để ký số.
+   - Khi gọi `manager.generate_tokens("Phuc")`, hệ thống tạo ra 2 chuỗi token độc lập:
+     - **Access Token:** Mang thông tin định danh `sub: "Phuc"`, định danh loại token `type: "access"` và thời hạn hết hạn ngắn (`exp = utcnow + 15 phút`). Token này được client lưu trữ để đính kèm trong các request truy cập API thường nhật.
+     - **Refresh Token:** Mang thông tin `sub: "Phuc"`, định danh `type: "refresh"` và thời hạn dài (`exp = utcnow + 24 giờ`). Token này dùng để đổi lấy Access Token mới khi Access Token cũ hết hạn mà không cần người dùng nhập lại thông tin đăng nhập.
+2. **Khởi chạy và Lắng nghe của API Gateway:**
+   - Đối tượng `APIGateway(secret)` khởi tạo một ứng dụng Flask tối giản và đăng ký endpoint bảo vệ `/protected`.
+   - Máy chủ lắng nghe trên cổng mặc định `http://127.0.0.1:5000`.
+   - Nhật ký (Server Log) ghi nhận:
+     - Dòng `* Running on http://127.0.0.1:5000` thông báo máy chủ sẵn sàng phục vụ.
+     - Dòng `127.0.0.1 - - "GET /protected HTTP/1.1" 200 -` xác nhận khi client gửi yêu cầu xác thực hợp lệ, máy chủ đã xác minh thành công và phản hồi với mã trạng thái HTTP 200.
+
+---
+
+### 3.3. Minh chứng thực nghiệm 5: Kiểm tra xác thực Bearer Token bằng `curl`
+
+Hình ảnh dưới đây ghi lại kịch bản kiểm thử gọi API từ máy trạm (Client) bằng công cụ `curl.exe`, truyền Access Token qua Header chuẩn HTTP `Authorization: Bearer`:
+
+![Minh chứng thực nghiệm 5: Kiểm tra xác thực Bearer Token bằng curl](images/5_jwt_curl_verification.png)
+
+#### 📝 Phân tích kỹ thuật cơ chế xác thực Token phía Gateway:
+1. **Cú pháp gửi yêu cầu xác thực chuẩn:**
+   ```bash
+   curl.exe -H "Authorization: Bearer <access_token>" http://127.0.0.1:5000/protected
+   ```
+   - Header `Authorization` được cấu hình với lược đồ định danh chuẩn **Bearer Authentication** (RFC 6750).
+   - Token truyền đi là chuỗi JWT gồm 3 phần được mã hóa Base64URL: `Header.Payload.Signature`.
+2. **Cơ chế thẩm định an ninh tại API Gateway (`gateway.py`):**
+   - Hệ thống trích xuất chuỗi token bằng cách loại bỏ tiền tố `"Bearer "`:
+     ```python
+     token = request.headers.get("Authorization", "").replace("Bearer ", "")
+     ```
+   - Thư viện `jwt.decode(token, self.secret, algorithms=[self.algorithm])` thực hiện:
+     - **Kiểm tra tính toàn vẹn (Integrity):** Tính toán lại chữ ký HMAC-SHA256 trên chuỗi Header và Payload kết hợp với `secret`. Nếu token bị kẻ tấn công sửa đổi bất kỳ ký tự nào, chữ ký sẽ không khớp (`InvalidSignatureError`).
+     - **Kiểm tra thời hạn (Expiration):** So sánh trường `exp` với thời gian UTC hiện tại. Nếu token quá hạn 15 phút, từ chối ngay lập tức (`ExpiredSignatureError`).
+     - **Trích xuất thông tin Subject (Claim `sub`):** Lấy giá trị định danh người dùng `payload["sub"]` ("Phuc").
+3. **Kết quả xác thực thành công:**
+   - Máy chủ phản hồi dữ liệu JSON với mã trạng thái `200 OK`:
+     ```json
+     {"message": "Access granted", "user": "Phuc"}
+     ```
+   - Điều này chứng minh cổng API Gateway đã bảo vệ thành công endpoint `/protected`, chỉ cho phép những yêu cầu sở hữu token hợp lệ, còn nguyên vẹn và đúng hạn mới được phép truy cập. Nếu token bị sai hoặc không có header `Authorization`, hệ thống lập tức chặn lại và trả về `401 Unauthorized` (`{"message": "Access denied"}`).
 
 ---
 
