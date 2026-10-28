@@ -21,9 +21,9 @@
 
 ## 1. GIỚI THIỆU TỔNG QUAN DEVSECOPS
 
-Quy trình phát triển phần mềm hiện đại đòi hỏi tốc độ phát hành nhanh đi kèm độ an toàn hệ thống. Phương pháp kết hợp kiểm thử an ninh xuyên suốt chu trình phát triển phần mềm được gọi là DevSecOps. 
+Quy trình phát triển phần mềm hiện đại đòi hỏi tốc độ phát hành nhanh đi kèm độ an toàn hệ thống. Phương pháp kết hợp kiểm thử an ninh xuyên suốt chu trình phát triển phần mềm được gọi là DevSecOps.
 
-Mục tiêu chính của DevSecOps là dịch chuyển việc kiểm thử an ninh sang giai đoạn sớm của dự án, thường gọi là Shift Left Security. Thay vì phát hiện lỗ hổng ở bước vận hành cuối cùng, các công cụ kiểm tra tự động được tích hợp trực tiếp vào quy trình tích hợp liên tục và triển khai liên tục (CI/CD). Phương pháp này giúp phát hiện sai sót lập trình, rò rỉ khóa bí mật và mã độc trước khi ứng dụng được đưa lên môi trường thực tế.
+Mục tiêu chính của DevSecOps là dịch chuyển việc kiểm thử an ninh sang giai đoạn sớm của dự án, thường gọi là Shift Left Security. Thay vì phát hiện lỗi ở bước vận hành cuối cùng, các công cụ kiểm tra tự động được tích hợp trực tiếp vào quy trình tích hợp liên tục và triển khai liên tục (CI/CD). Phương pháp này giúp phát hiện sai sót lập trình, rò rỉ khóa bí mật và mã độc trước khi ứng dụng được đưa lên môi trường thực tế.
 
 ---
 
@@ -33,6 +33,14 @@ Cấu trúc các thư mục và tệp tin mã nguồn trong thư mục `Buoi6`:
 
 ```text
 Buoi6/
+├── images/
+│   ├── 1_secret_scanner.png                # Ket qua quet ro ri khoa bi mat
+│   ├── 2_gitlab_push_docusaurus.png        # Day ma nguon Docusaurus len GitLab
+│   ├── 3_gitlab_pipeline_verify.png        # Giao dien pipeline va xac thuc GitLab
+│   ├── 4_github_actions_success.png        # Tong quan pipeline tren GitHub Actions
+│   ├── 5_github_actions_pipeline_detail.png# Chi tiet cac cong viec Security Gate va Build
+│   ├── 6_docusaurus_portal.png             # Giao dien cong thong tin Docusaurus
+│   └── 7_sca_iac_scanners.png              # Ket qua quet an ninh SCA va ha tang IaC
 ├── gitlab-ci-basic/
 │   └── .gitlab-ci.yml                      # Pipeline co ban gom 4 job va 3 stage
 ├── pipeline-tutorial/
@@ -135,42 +143,27 @@ npm install
 ```
 
 Cập nhật thông số trong tệp `docusaurus.config.js`:
-- `url`: `https://nguyenphiphuc.gitlab.io`
+- `url`: `https://nphiphuc0.gitlab.io`
 - `baseUrl`: `/pipeline-tutorial/`
 
-### 5.2. Bước 1: Khởi tạo tệp CI/CD ban đầu
+### 5.2. Đẩy mã nguồn lên kho lưu trữ GitLab
 
-Tệp `Buoi6/pipeline-tutorial/.gitlab-ci-step1-initial.yml` kiểm tra khả năng hoạt động của runner:
+Thực hiện kết nối và đẩy mã nguồn từ máy trạm lên dự án `pipeline-tutorial` trên GitLab:
 
-```yaml
-test-job:
-  script:
-    - echo "This is my first job!"
-    - date
+```powershell
+cd D:\Lab_THLTANTT\Buoi6\pipeline-tutorial
+git push -u gitlab master --force
 ```
 
-Công việc này ghi nhận thông điệp chào mừng và thời gian thực thi của hệ thống.
+![Đẩy mã nguồn Docusaurus lên GitLab](images/2_gitlab_push_docusaurus.png)
 
-### 5.3. Bước 2: Bổ sung công việc biên dịch mã nguồn
+*Hình 1: Đẩy mã nguồn dự án Docusaurus lên kho lưu trữ GitLab thành công 100% với 62 đối tượng.*
 
-Tệp `Buoi6/pipeline-tutorial/.gitlab-ci-step2-build.yml` sử dụng hình ảnh Docker Node.js để biên dịch dự án:
+### 5.3. Cấu hình pipeline qua từng giai đoạn
 
-```yaml
-build-job:
-  image: node
-  script:
-    - npm install
-    - npm run build
-  artifacts:
-    paths:
-      - "build/"
-```
-
-Kết quả biên dịch nằm trong thư mục `build/` được lưu lại dưới dạng artifacts để phục vụ cho các công việc ở giai đoạn tiếp theo.
-
-### 5.4. Bước 3: Triển khai cổng thông tin tĩnh qua GitLab Pages
-
-Tệp `Buoi6/pipeline-tutorial/.gitlab-ci.yml` liên kết giai đoạn build và deploy:
+- **Bước 1, Khởi tạo ban đầu:** Tệp `Buoi6/pipeline-tutorial/.gitlab-ci-step1-initial.yml` chạy `test-job` kiểm tra kết nối runner.
+- **Bước 2, Biên dịch mã nguồn:** Tệp `Buoi6/pipeline-tutorial/.gitlab-ci-step2-build.yml` chạy `build-job` đóng gói ứng dụng qua lệnh `npm run build` và trích xuất artifact thư mục `build/`.
+- **Bước 3, Triển khai GitLab Pages:** Tệp `Buoi6/pipeline-tutorial/.gitlab-ci.yml` liên kết 2 stage `build` và `deploy`:
 
 ```yaml
 stages:
@@ -196,59 +189,66 @@ pages:
       - "public/"
 ```
 
-Trình chạy tự động tải thư mục `build/` từ công việc trước, đổi tên thành `public/` và công bố thông qua dịch vụ GitLab Pages tại liên kết `https://nguyenphiphuc.gitlab.io/pipeline-tutorial/`.
+### 5.4. Cơ chế kiểm soát Runner và chính sách xác thực trên GitLab
+
+Khi pipeline được kích hoạt trên GitLab.com, hệ thống kiểm tra trạng thái xác thực của tài khoản:
+
+![Giao diện pipeline và thông báo xác thực tài khoản](images/3_gitlab_pipeline_verify.png)
+
+*Hình 2: Giao diện pipeline trên GitLab ghi nhận sự kiện kích hoạt và yêu cầu xác thực tài khoản.*
+
+Theo chính sách của GitLab, tài khoản người dùng mới cần thực hiện xác thực để sử dụng máy chủ chia sẻ shared runner miễn phí. Quy định này nhằm ngăn chặn các hành vi lợi dụng hạ tầng CI/CD đám mây để đào tiền ảo.
+
+### 5.5. Kết quả hiển thị cổng thông tin Docusaurus
+
+Trang tài liệu Docusaurus được biên dịch hoàn chỉnh từ mã nguồn React và Markdown:
+
+![Giao diện cổng thông tin Docusaurus](images/6_docusaurus_portal.png)
+
+*Hình 3: Giao diện cổng thông tin Docusaurus chạy thực tế tại địa chỉ cục bộ sau khi hoàn tất quá trình biên dịch.*
+
+Trang chủ hiển thị tiêu đề `DevSecOps Pipeline Tutorial`, phụ đề `CI/CD and Security Automation with GitLab` và các thành phần giao diện mẫu được đóng gói chuẩn xác.
 
 ---
 
 ## 6. TÍCH HỢP CHỐT CHẶN AN NINH DEVSECOPS
 
-Để đảm bảo pipeline đáp ứng tiêu chuẩn DevSecOps theo nội dung bài học, ba công cụ quét kiểm thử an ninh được xây dựng trong thư mục `security-scripts/`:
+Để đảm bảo quy trình chuyển giao phần mềm đáp ứng tiêu chuẩn an ninh, ba công cụ quét an toàn tự động được lập trình trong thư mục `security-scripts/`:
 
 ### 6.1. Dò tìm khóa bí mật với `secret_scanner.py`
 
 Công cụ rà soát toàn bộ tệp tin để phát hiện khóa truy cập AWS, khóa mã hóa bất đối xứng hoặc mật khẩu lưu tĩnh:
 
 ```powershell
+cd D:\Lab_THLTANTT
 python Buoi6/security-scripts/secret_scanner.py Buoi6
 ```
 
-Kết quả thực thi:
-```text
-[*] DevSecOps Secret Scanner: Scanning 'Buoi6'...
-[+] PASS: Khong phat hien khoa bi mat hoac token bi ro ri.
-```
+![Kết quả quét Secret Scanning](images/1_secret_scanner.png)
 
-### 6.2. Phân tích thành phần phụ thuộc với `sca_scanner.py`
+*Hình 4: Công cụ Secret Scanner kiểm tra toàn bộ mã nguồn Buoi6 và trả về kết quả đạt tiêu chuẩn PASS.*
 
-Công cụ kiểm tra danh sách gói phụ thuộc trong `package.json` nhằm đối chiếu với danh sách các gói có mức rủi ro cao:
+Hệ thống xác nhận không tồn tại khóa bí mật hay mã token nhạy cảm bị lưu trữ trực tiếp trong kho mã nguồn.
+
+### 6.2. Phân tích thành phần phụ thuộc SCA và Kiểm thử cấu hình IaC
+
+Chạy đồng thời công cụ phân tích phụ thuộc thư viện `sca_scanner.py` và công cụ quét an toàn hạ tầng `iac_scanner.py`:
 
 ```powershell
 python Buoi6/security-scripts/sca_scanner.py Buoi6
-```
-
-Kết quả thực thi:
-```text
-[*] DevSecOps Software Composition Analysis (SCA): Scanning 'Buoi6'...
-[+] PASS: Khong phat hien phu thuoc thu vien chua lo hong nghiem trong.
-```
-
-### 6.3. Kiểm thử an toàn cấu hình hạ tầng với `iac_scanner.py`
-
-Công cụ phân tích cú pháp Dockerfile và YAML để phát hiện việc gán quyền quản trị tối cao hoặc chế độ privileged:
-
-```powershell
 python Buoi6/security-scripts/iac_scanner.py Buoi6
 ```
 
-Kết quả thực thi:
-```text
-[*] DevSecOps IaC Scanner: Scanning 'Buoi6'...
-[+] PASS: Tat ca cau hinh ha tang IaC deu tuan thu quy tac an toan.
-```
+![Kết quả quét SCA và IaC](images/7_sca_iac_scanners.png)
 
-### 6.4. Pipeline DevSecOps hoàn chỉnh
+*Hình 5: Cả hai công cụ SCA và IaC Scanner đều trả về kết quả an toàn PASS.*
 
-Tệp `Buoi6/pipeline-tutorial/.gitlab-ci-devsecops.yml` thiết lập toàn diện các giai đoạn quét an ninh, biên dịch và phát hành:
+- **Công cụ SCA:** Quét toàn bộ các gói trong `package.json`, xác nhận không chứa thư viện nằm trong danh mục cảnh báo rủi ro cao.
+- **Công cụ IaC:** Phân tích các tệp cấu hình Dockerfile và tệp YAML, xác nhận tuân thủ nguyên tắc không sử dụng quyền quản trị tối cao root và không bật chế độ đặc quyền privileged.
+
+### 6.3. Cấu hình Pipeline DevSecOps hoàn chỉnh
+
+Tệp `Buoi6/pipeline-tutorial/.gitlab-ci-devsecops.yml` tích hợp đầy đủ 3 chốt kiểm tra an ninh trước khi phát hành phần mềm:
 
 ```yaml
 stages:
@@ -300,23 +300,35 @@ pages:
 
 ## 7. TỰ ĐỘNG HÓA KIỂM THỬ TRÊN GITHUB ACTIONS
 
-Bên cạnh nền tảng GitLab, hệ thống CI/CD được mở rộng đồng bộ sang GitHub thông qua tệp cấu hình `.github/workflows/devsecops-pipeline.yml`. Khi sinh viên đẩy mã nguồn lên kho lưu trữ GitHub, quy trình kiểm tra sẽ tự động kích hoạt:
+Hệ thống CI/CD được thiết lập đồng bộ sang nền tảng GitHub thông qua tệp `.github/workflows/devsecops-pipeline.yml`. Mỗi khi có commit mới được đẩy lên kho lưu trữ, quy trình kiểm thử an ninh và biên dịch được thực thi tự động.
 
-- Bước 1: Kích hoạt chốt chặn rà soát khóa bí mật và token truy cập.
-- Bước 2: Rà soát phụ thuộc các thư viện qua lệnh `npm audit`.
-- Bước 3: Biên dịch toàn bộ tài liệu tĩnh Docusaurus bằng Node.js 20.
-- Bước 4: Đóng gói và tải artifact `docusaurus-build` lên kho lưu trữ GitHub.
+### 7.1. Tổng quan thực thi workflow
+
+![Tổng quan thực thi trên GitHub Actions](images/4_github_actions_success.png)
+
+*Hình 6: Workflow DevSecOps CI/CD Pipeline thực thi hoàn tất với trạng thái thành công sau 1 phút 11 giây.*
+
+### 7.2. Chi tiết các công việc trong Pipeline
+
+Bấm vào chi tiết lần chạy để quan sát sơ đồ thực thi liên hoàn giữa 2 công việc:
+
+![Chi tiết các công việc trong GitHub Actions](images/5_github_actions_pipeline_detail.png)
+
+*Hình 7: Sơ đồ trực quan gồm 2 công việc Security Gate và Build Docusaurus Website đều đạt trạng thái thành công.*
+
+- **Công việc `Security Gate`:** Thực hiện trong 34 giây, bao gồm bước quét Secret Scanning kiểm tra rò rỉ khóa bí mật và bước kiểm toán phụ thuộc thư viện qua lệnh `npm audit`.
+- **Công việc `Build Docusaurus Website`:** Thực hiện trong 32 giây sau khi chốt chặn an ninh đã vượt qua, thiết lập môi trường Node.js 20, biên dịch toàn bộ mã nguồn tĩnh và xuất bản 1 gói artifact lưu trữ.
 
 ---
 
 ## 8. KẾT LUẬN VÀ ĐÁNH GIÁ THỰC NGHIỆM
 
 Quá trình thực hành Bài số 6 đã hoàn thành các chỉ tiêu kỹ thuật sau:
-- Xây dựng thành công 2 mô hình pipeline CI/CD trên GitLab gồm pipeline kiểm thử cơ bản và pipeline triển khai tự động cổng tài liệu Docusaurus.
-- Thiết lập 3 công cụ kiểm thử an ninh chuyên biệt gồm dò quét rò rỉ thông tin bí mật, kiểm toán phụ thuộc thư viện và rà soát an toàn cấu hình hạ tầng mã nguồn.
-- Biên dịch thành công 100% trang web tĩnh Docusaurus với 1295 gói phụ thuộc, xuất thư mục `build/` đáp ứng cấu hình triển khai GitLab Pages.
-- Cấu hình tệp quy trình kiểm thử tự động trên GitHub Actions phục vụ xác thực liên tục khi commit mã nguồn mới.
+- Xây dựng 2 mô hình pipeline CI/CD trên GitLab gồm pipeline kiểm thử cơ bản và pipeline triển khai tự động cổng tài liệu Docusaurus.
+- Thiết lập 3 công cụ kiểm thử an ninh chuyên biệt gồm dò quét rò rỉ thông tin bí mật, kiểm toán phụ thuộc thư viện và rà soát an toàn cấu hình hạ tầng mã nguồn, đạt tỷ lệ vượt qua 100%.
+- Biên dịch thành công cổng thông tin Docusaurus với 1295 gói phụ thuộc, xuất thư mục `build/` hoàn chỉnh.
+- Vận hành thành công quy trình tự động hóa DevSecOps trên GitHub Actions với thời gian thực thi 1 phút 11 giây, tạo thành công 1 artifact xuất bản.
 
 Hạn chế kỹ thuật còn tồn đọng:
-- Kiểm thử container cục bộ đòi hỏi máy trạm cài đặt trình nền Docker Daemon.
-- Kết quả kiểm toán phụ thuộc thư viện của các dự án Node.js lớn xuất hiện nhiều cảnh báo mức độ thấp, đòi hỏi thiết lập bộ lọc cảnh báo giả để không làm gián đoạn pipeline.
+- Máy chủ dùng chung của GitLab.com yêu cầu xác thực danh tính đối với tài khoản mới trước khi cấp phát tài nguyên runner.
+- Các cảnh báo mức độ thấp từ lệnh `npm audit` cần được rà soát định kỳ để loại trừ cảnh báo giả trong quy trình phát triển thực tế.

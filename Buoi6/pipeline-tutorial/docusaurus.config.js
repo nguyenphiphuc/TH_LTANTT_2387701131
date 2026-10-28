@@ -20,14 +20,14 @@ const config = {
   },
 
   // Set the production url of your site here
-  url: 'https://nguyenphiphuc.gitlab.io',
+  url: 'https://nphiphuc0.gitlab.io',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: '/pipeline-tutorial/',
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'nguyenphiphuc', // Usually your GitHub org/user name.
+  organizationName: 'nphiphuc0', // Usually your GitHub org/user name.
   projectName: 'pipeline-tutorial', // Usually your repo name.
 
   onBrokenLinks: 'throw',
