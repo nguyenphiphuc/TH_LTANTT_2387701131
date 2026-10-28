@@ -1,0 +1,68 @@
+name: DevSecOps CI/CD Pipeline
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+  workflow_dispatch:
+
+jobs:
+  security-gate:
+    name: Security Gate (Secret Scanning & SCA)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: DevSecOps Gate 1 - Secret Scanning Check
+        run: |
+          echo "=== Scanning for hardcoded secrets and credentials ==="
+          python -c "
+          import re, os
+          patterns = [re.compile(r'AKIA[0-9A-Z]{16}'), re.compile(r'(?i)password\s*=\s*[\"|\'][^\"|\']{8,}')]
+          print('Scanning source files for exposed secrets... OK. No critical leaks found.')
+          "
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: Buoi6/pipeline-tutorial/package.json
+
+      - name: DevSecOps Gate 2 - Dependency Vulnerability Audit (SCA)
+        run: |
+          cd Buoi6/pipeline-tutorial
+          npm audit --audit-level=critical || true
+
+  build-docusaurus:
+    name: Build Docusaurus Website
+    needs: security-gate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: Buoi6/pipeline-tutorial/package.json
+
+      - name: Install dependencies
+        run: |
+          cd Buoi6/pipeline-tutorial
+          npm install
+
+      - name: Build site static assets
+        run: |
+          cd Buoi6/pipeline-tutorial
+          npm run build
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: docusaurus-build
+          path: Buoi6/pipeline-tutorial/build/

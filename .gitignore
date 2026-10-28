@@ -3,3 +3,9 @@ certs/
 *.pem
 __pycache__/
 *.egg-info/
+node_modules/
+build/
+dist/
+public/
+.docusaurus/
+*.log
